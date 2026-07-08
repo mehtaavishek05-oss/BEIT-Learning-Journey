@@ -1,64 +1,67 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import AuthLayout from "../components/auth/AuthLayout";
 import Input from "../components/auth/Input";
 import Button from "../components/auth/Button";
-import AuthLayout from "../components/auth/AuthLayout";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [form, setForm] = useState({
+    name:"",
+    email:"",
+    password:"",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    navigate("/");
   };
 
   return (
-    <AuthLayout title="Register">
+    <AuthLayout
+      title="Create Account 🚀"
+      subtitle="Start your journey"
+    >
       <form onSubmit={handleSubmit}>
+
         <Input
-          label="Username"
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
+          label="Full Name"
+          placeholder="John Doe"
+          onChange={(e)=>
+            setForm({...form,name:e.target.value})
+          }
         />
 
         <Input
           label="Email"
           type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+          placeholder="Enter email"
+          onChange={(e)=>
+            setForm({...form,email:e.target.value})
+          }
         />
 
         <Input
           label="Password"
           type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
+          placeholder="Password"
+          onChange={(e)=>
+            setForm({...form,password:e.target.value})
+          }
         />
 
-        <Input
-          label="Confirm Password"
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-        />
+        <Button>Register</Button>
 
-        <Button text="Register" />
+        <p className="text-center mt-5">
+          Already have an account?{" "}
+          <Link
+            to="/"
+            className="text-indigo-600 font-semibold"
+          >
+            Login
+          </Link>
+        </p>
       </form>
     </AuthLayout>
   );

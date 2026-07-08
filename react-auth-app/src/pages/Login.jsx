@@ -1,46 +1,60 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import AuthLayout from "../components/auth/AuthLayout";
 import Input from "../components/auth/Input";
 import Button from "../components/auth/Button";
-import AuthLayout from "../components/auth/AuthLayout";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [form, setForm] = useState({
+    email:"",
+    password:"",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    localStorage.setItem("isAuth", "true");
+
+    navigate("/dashboard");
   };
 
   return (
-    <AuthLayout title="Login">
+    <AuthLayout
+      title="Welcome Back 👋"
+      subtitle="Login to continue"
+    >
       <form onSubmit={handleSubmit}>
         <Input
           label="Email"
           type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
+          placeholder="Enter email"
+          onChange={(e)=>
+            setForm({...form,email:e.target.value})
+          }
         />
 
         <Input
           label="Password"
           type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
+          placeholder="Enter password"
+          onChange={(e)=>
+            setForm({...form,password:e.target.value})
+          }
         />
 
-        <Button text="Login" />
+        <Button>Login</Button>
+
+        <p className="text-center mt-5">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="text-indigo-600 font-semibold"
+          >
+            Register
+          </Link>
+        </p>
       </form>
     </AuthLayout>
   );

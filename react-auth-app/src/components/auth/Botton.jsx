@@ -1,10 +1,14 @@
-const Button = ({ text, type = "submit" }) => {
+import React from "react";
+
+const Button = ({ children, ...props }) => {
   return (
     <button
-      type={type}
-      className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+      {...props}
+      className="w-full bg-indigo-600 hover:bg-indigo-700
+      text-white py-3 rounded-xl font-semibold
+      transition-all duration-300 shadow-lg"
     >
-      {text}
+      {children}
     </button>
   );
 };
